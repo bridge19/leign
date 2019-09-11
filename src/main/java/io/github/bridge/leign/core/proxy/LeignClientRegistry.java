@@ -1,4 +1,6 @@
-package io.github.bridge.leign.core;
+package io.github.bridge.leign.core.proxy;
+
+import io.github.bridge.leign.core.proxy.LeignClientFactory;
 
 import java.util.HashMap;
 import java.util.Map;

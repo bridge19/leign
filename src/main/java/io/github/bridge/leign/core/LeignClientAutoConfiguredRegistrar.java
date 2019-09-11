@@ -1,6 +1,6 @@
 package io.github.bridge.leign.core;
 
-import io.github.bridge.leign.annotation.EnableLeignClient;
+import io.github.bridge.leign.annotation.EnableLeignClients;
 import io.github.bridge.leign.annotation.LeignClient;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -27,7 +27,7 @@ public class LeignClientAutoConfiguredRegistrar
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        AnnotationAttributes annoAttrs = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableLeignClient.class.getName()));
+        AnnotationAttributes annoAttrs = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableLeignClients.class.getName()));
         ClassPathLeignClientScanner scanner = new ClassPathLeignClientScanner(registry);
         if (resourceLoader != null) {
             scanner.setResourceLoader(resourceLoader);

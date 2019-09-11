@@ -3,8 +3,6 @@ package io.github.bridge.leign.core;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
@@ -15,7 +13,6 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -26,7 +23,7 @@ public class ClassPathLeignClientScanner extends ClassPathBeanDefinitionScanner 
 
     private Class<? extends Annotation> annotationClass;
 
-    private LeignClientFactoryBean<?> mapperFactoryBean = new LeignClientFactoryBean<Object>();
+    private LeignClientFactoryBean<?> leignClientFactoryBean = new LeignClientFactoryBean<Object>();
 
     public void setAnnotationClass(Class<? extends Annotation> annotationClass){
         this.annotationClass = annotationClass;
@@ -91,10 +88,9 @@ public class ClassPathLeignClientScanner extends ClassPathBeanDefinitionScanner 
             }
 
             // the mapper interface is the original class of the bean
-            // but, the actual class of the bean is MapperFactoryBean
+            // but, the actual class of the bean is LeignClientFactoryBean
             definition.getConstructorArgumentValues().addGenericArgumentValue(definition.getBeanClassName()); // issue #59
-            definition.setBeanClass(this.mapperFactoryBean.getClass());
-
+            definition.setBeanClass(this.leignClientFactoryBean.getClass());
         }
     }
 

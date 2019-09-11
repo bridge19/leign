@@ -9,6 +9,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 @Import(LeignClientAutoConfiguredRegistrar.class)
-public @interface EnableLeignClient {
+public @interface EnableLeignClients {
     String[] basePackages() default {};
 }

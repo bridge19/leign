@@ -1,5 +1,6 @@
 package io.github.bridge.leign.core;
 
+import io.github.bridge.leign.core.proxy.LeignClientRegistry;
 import org.springframework.beans.factory.FactoryBean;
 
 public class LeignClientFactoryBean<T> implements FactoryBean<T> {

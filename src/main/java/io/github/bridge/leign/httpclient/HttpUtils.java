@@ -56,7 +56,6 @@ import java.util.*;
  * @date 2019/6/4 11:46
  */
 @Slf4j
-@Component
 public class HttpUtils {
 
   /**

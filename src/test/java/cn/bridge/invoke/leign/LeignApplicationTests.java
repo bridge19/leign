@@ -2,6 +2,7 @@ package cn.bridge.invoke.leign;
 
 import io.github.bridge.leign.LeignApplication;
 import io.github.bridge.leign.service.ClientTestService;
+import io.github.bridge.leign.service.MyObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,10 @@ public class LeignApplicationTests {
 
     @Test
     public void contextLoads() {
-       String out = clientTestService.hello();
+        MyObject myObject = new MyObject();
+        myObject.setName("xxxx");
+        myObject.setSex("male");
+       String out = clientTestService.hello("xuyong",999999,myObject);
         System.out.println(out);
     }
 

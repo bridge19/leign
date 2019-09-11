@@ -1,6 +1,5 @@
-package io.github.bridge.leign.core;
+package io.github.bridge.leign.core.proxy;
 
-import io.github.bridge.leign.core.proxy.LeignClientProxy;
 import org.springframework.cglib.proxy.Proxy;
 
 import java.lang.reflect.Method;
