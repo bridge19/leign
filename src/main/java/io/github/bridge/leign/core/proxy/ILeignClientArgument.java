@@ -8,6 +8,7 @@ public interface ILeignClientArgument {
     void parse();
     void getParameters(Object value, Map<String,String> target);
     void getHeaders(Object value, Map<String,String> target);
+    Map<String,Object> getBody(Object value);
     VariableType getVariableType();
     String getVariableName();
 }

@@ -21,6 +21,8 @@ public class LeignApplicationTests {
         MyObject myObject = new MyObject();
         myObject.setName("xxxx");
         myObject.setSex("male");
+        myObject.setBody1("body1");
+        myObject.setBody2("odya1");
        String out = clientTestService.hello("xuyong",999999,myObject);
         System.out.println(out);
     }

@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Data
 public class LeignClientPrimitiveArgument implements ILeignClientArgument {
-    private boolean useful;
     private Class clazz;
     private Parameter parameter;
     private VariableType variableType;
@@ -73,5 +72,10 @@ public class LeignClientPrimitiveArgument implements ILeignClientArgument {
             value = String.valueOf(value);
         }
         target.put(variableName, strValue);
+    }
+
+    @Override
+    public Map<String, Object> getBody(Object value) {
+        return null;
     }
 }

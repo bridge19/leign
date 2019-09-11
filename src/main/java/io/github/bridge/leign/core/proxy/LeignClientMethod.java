@@ -140,9 +140,13 @@ public class LeignClientMethod {
                     params[i].getParameters(args[i],querys);
                 }else if(params[i].getVariableType() == VariableType.QUERYBODY){
                     arguments.put(params[i].getVariableName(),args[i]);
-                }else if(params[i].getVariableType() == VariableType.PARAM_HEADER){
+                }else if(params[i].getVariableType() == VariableType.MIX){
                     params[i].getHeaders(args[i],headers);
                     params[i].getParameters(args[i],querys);
+                    Map bodyMap =  params[i].getBody(args[i]);
+                    if(bodyMap != null) {
+                        arguments.put(params[i].getVariableName(), bodyMap);
+                    }
                 }
             }
         }

@@ -21,7 +21,6 @@ import java.util.Map;
 @Data
 @Slf4j
 public class LeignClientObjectArgument implements ILeignClientArgument {
-    private boolean useful;
     private Class clazz;
     private VariableType variableType;
     private String variableName;
@@ -29,6 +28,7 @@ public class LeignClientObjectArgument implements ILeignClientArgument {
 
     private Map<String, Method> paramArgument = new HashMap<>();
     private Map<String, Method> headerArgument = new HashMap<>();
+    private Map<String, Method> body = new HashMap<>();
 
     public LeignClientObjectArgument(Parameter parameter) {
         this.parameter = parameter;
@@ -38,12 +38,11 @@ public class LeignClientObjectArgument implements ILeignClientArgument {
     @Override
     public void parse() {
         Annotation[] annotations = parameter.getAnnotations();
-
+        variableName = parameter.getName();
         if (ArrayUtils.isNotEmpty(annotations)) {
             Annotation annotation = annotations[0];
             if (annotation instanceof QueryBody) {
                 variableType = VariableType.QUERYBODY;
-                variableName = parameter.getName();
             }
         } else {
             Field[] fields = clazz.getDeclaredFields();
@@ -53,22 +52,20 @@ public class LeignClientObjectArgument implements ILeignClientArgument {
                     if (ArrayUtils.isNotEmpty(params)) {
                         Param param = params[0];
                         parseParam(param, field);
-                    }
-                    Header[] headers = field.getAnnotationsByType(Header.class);
-                    if (ArrayUtils.isNotEmpty(headers)) {
-                        Header header = headers[0];
-                        parseHeader(header, field);
+                    }else {
+                        Header[] headers = field.getAnnotationsByType(Header.class);
+                        if (ArrayUtils.isNotEmpty(headers)) {
+                            Header header = headers[0];
+                            parseHeader(header, field);
+                        }else {
+                            body.put(field.getName(),convertGetter(field.getName()));
+                        }
                     }
                 }
                 if (paramArgument.size() == 0 && headerArgument.size() == 0) {
                     variableType = VariableType.QUERYBODY;
-                    variableName = parameter.getName();
-                }else if(paramArgument.size() == 0){
-                    variableType = VariableType.HEADER;
-                }else if(headerArgument.size() == 0){
-                    variableType = VariableType.PARAMETER;
-                }else {
-                    variableType = VariableType.PARAM_HEADER;
+                }else{
+                    variableType = VariableType.MIX;
                 }
             }
         }
@@ -79,7 +76,7 @@ public class LeignClientObjectArgument implements ILeignClientArgument {
         if (StringUtils.isEmpty(paramKey)) {
             paramKey = field.getName();
         }
-        Method method = convertGetter(clazz, field.getName());
+        Method method = convertGetter(field.getName());
         if (method != null) {
             paramArgument.put(paramKey, method);
         }
@@ -90,13 +87,13 @@ public class LeignClientObjectArgument implements ILeignClientArgument {
         if (headerKey == null) {
             headerKey = field.getName();
         }
-        Method method = convertGetter(clazz, field.getName());
+        Method method = convertGetter(field.getName());
         if (method != null) {
             headerArgument.put(headerKey, method);
         }
     }
 
-    private Method convertGetter(Class clazz, String fieldName) {
+    private Method convertGetter(String fieldName) {
         String str1 = fieldName.substring(0, 1);
         String str2 = fieldName.substring(1, fieldName.length());
         String method_get = "get" + str1.toUpperCase() + str2;
@@ -119,6 +116,30 @@ public class LeignClientObjectArgument implements ILeignClientArgument {
     public void getHeaders(Object value, Map<String, String> target) {
         Iterator<Map.Entry<String, Method>> iterator = headerArgument.entrySet().iterator();
         setVariable(value, target, iterator);
+    }
+
+    @Override
+    public Map<String, Object> getBody(Object value) {
+
+        Map<String,Object> bodyMap = null;
+        if(body.size()>0) {
+            bodyMap = new HashMap<>();
+            Iterator<Map.Entry<String, Method>> iterator = body.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Method> entry = iterator.next();
+                String headerKey = entry.getKey();
+                Object headerValue = null;
+                try {
+                    headerValue = entry.getValue().invoke(value, null);
+                } catch (IllegalAccessException e) {
+                    log.warn("get function error.", e);
+                } catch (InvocationTargetException e) {
+                    log.warn("get function error.", e);
+                }
+                bodyMap.put(headerKey, headerValue);
+            }
+        }
+        return bodyMap;
     }
 
     public void setVariable(Object value, Map<String, String> target, Iterator<Map.Entry<String, Method>> iterator) {

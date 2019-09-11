@@ -11,4 +11,6 @@ public class MyObject {
     private String name;
     @Header
     private String sex;
+    private String body1;
+    private String body2;
 }
