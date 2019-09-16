@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LeignClientAutoConfiguredRegistrar
+public class LeignClientAutoConfiguredRegistrer
         implements ImportBeanDefinitionRegistrar, ResourceLoaderAware, BeanFactoryAware
 {
 

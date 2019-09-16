@@ -9,6 +9,5 @@ import io.github.bridge.leign.annotation.Post;
 public interface ClientTestService {
     @Post(host = "www.163.com", url = "")
     @Header("afdsaf:29437")
-    @Header("hd1:431434")
     String hello(@Param("name") String name,@Param("value") int value, MyObject myObject);
 }

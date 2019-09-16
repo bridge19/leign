@@ -83,8 +83,8 @@ public class ClassPathLeignClientScanner extends ClassPathBeanDefinitionScanner 
             definition = (GenericBeanDefinition) holder.getBeanDefinition();
 
             if (logger.isDebugEnabled()) {
-                logger.debug("Creating MapperFactoryBean with name '" + holder.getBeanName()
-                        + "' and '" + definition.getBeanClassName() + "' mapperInterface");
+                logger.debug("Creating LeignClientFactoryBean with name '" + holder.getBeanName()
+                        + "' and '" + definition.getBeanClassName() + "' LeignClientInterface");
             }
 
             // the mapper interface is the original class of the bean
@@ -99,7 +99,11 @@ public class ClassPathLeignClientScanner extends ClassPathBeanDefinitionScanner 
      */
     @Override
     protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
-        return beanDefinition.getMetadata().isInterface() && beanDefinition.getMetadata().isIndependent();
+        if(this.annotationClass != null){
+            return beanDefinition.getMetadata().getAnnotationTypes().contains(this.annotationClass.getName());
+        }else {
+            return beanDefinition.getMetadata().isInterface() && beanDefinition.getMetadata().isIndependent();
+        }
     }
 
     /**

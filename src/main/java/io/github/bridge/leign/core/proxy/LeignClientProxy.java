@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class LeignClientProxy<T>  implements InvocationHandler {
 
-    private final Class<T> mapperInterface;
+    private final Class<T> leignClientInterface;
     private final Map<Method, LeignClientMethod> methodCache;
 
-    public LeignClientProxy(Class<T> mapperInterface, Map<Method, LeignClientMethod> methodCache){
-        this.mapperInterface = mapperInterface;
+    public LeignClientProxy(Class<T> leignClientInterface, Map<Method, LeignClientMethod> methodCache){
+        this.leignClientInterface = leignClientInterface;
         this.methodCache = methodCache;
     }
     @Override
@@ -22,7 +22,7 @@ public class LeignClientProxy<T>  implements InvocationHandler {
             leignClientMethod = new LeignClientMethod(method);
             leignClientMethod.init();
         }
-        System.out.println(mapperInterface.getName() +" invoked.");
+        System.out.println(leignClientInterface.getName() +" invoked.");
         return leignClientMethod.execute(args);
     }
 }
