@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Put {
-    String host() default "";
-    String url() default "";
+public @interface ToParam {
+    String value() default "";
 }

@@ -1,4 +1,4 @@
-package io.github.bridge.leign.annotation;
+package io.github.bridge.leign.annotation.method;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Get {
+public @interface Put {
     String host() default "";
     String url() default "";
 }

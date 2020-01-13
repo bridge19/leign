@@ -2,6 +2,10 @@ package io.github.bridge.leign.core.proxy;
 
 import com.alibaba.fastjson.JSONObject;
 import io.github.bridge.leign.annotation.*;
+import io.github.bridge.leign.annotation.method.Delete;
+import io.github.bridge.leign.annotation.method.Get;
+import io.github.bridge.leign.annotation.method.Post;
+import io.github.bridge.leign.annotation.method.Put;
 import io.github.bridge.leign.enums.VariableType;
 import io.github.bridge.leign.httpclient.HttpUtils;
 import io.github.bridge.leign.json.JSONUtil;

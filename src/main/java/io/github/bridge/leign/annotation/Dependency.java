@@ -15,5 +15,4 @@ public @interface Dependency {
     DependecyScope scope() default DependecyScope.NEVER;
     DependencyPersist persist() default DependencyPersist.NEVER;
     DependecyType type() default DependecyType.BY_HEADER;
-    int order() default 0;
 }

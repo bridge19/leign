@@ -5,7 +5,7 @@
 ```java
 @LeignClient(host="http://<ip>:<port>")
 public interface MyService{
-    @io.github.bridge.leign.annotation.Post(url="/title")
+    @io.github.bridge.leign.annotation.method.Post(url="/title")
     ReturnObject service1(@Param("titile") String title);
 }
 ```
